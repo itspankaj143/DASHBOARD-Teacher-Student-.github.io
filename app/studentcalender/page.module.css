@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+  }
+  /* .blur-effect {
+    filter: blur(2px); 
+    opacity: 0.9; 
+  } */
+  
+  .h2{
+
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+
+  color: red;
+  font-size: 2rem; 
+  }
+  
+  .container .calendar{
+    margin-top: 60px;
+    height: 80%;
+    width: 90%;
+  }
+  
+  .outer{
+    position: relative;
+    margin-top: 3px;
+  }
+  
+  /* .modal{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: grey;
+    z-index: 10000 !important;
+    border: 1px solid red;
+  } */

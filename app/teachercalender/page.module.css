@@ -1,0 +1,80 @@
+.App{
+  text-align: center;
+  background-color: lightgray;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: -2px -4px 4px gray;
+}
+  
+.h2{
+  text-align: center;
+  width: 100%;
+  /* border: 1px solid red; */
+  position: relative;
+    top:5rem;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem !important;
+  }
+  
+  .container{
+    
+    height: 90vh;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+    width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .button{
+    width: 68% !important;
+    border-radius: 5px;
+    text-align: center;
+    height: 2rem;
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid grey;
+    background: grey;
+  }
+  
+  .button:hover{
+    background-color: rgb(32, 111, 148) !important;
+  }
+  
+  
+  .all{
+    width: 68% !important;
+    border-radius: 5px;
+    text-align: center;
+    height: 2rem;
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid grey;
+  }
+  
+  .dpicker{
+    border-radius: 5px !important;
+    width: 100% !important;
+    height: 2rem;
+    margin: 10px 0px;
+    text-align: center;
+    border: 1px solid grey;
+    outline: none;
+  }
+  
+  .all:focus, .dpicker:focus{
+    outline: 2px solid rgb(32, 92, 148)!important; 
+    border: 2px solid rgba(30, 110, 121) !important; 
+  }
