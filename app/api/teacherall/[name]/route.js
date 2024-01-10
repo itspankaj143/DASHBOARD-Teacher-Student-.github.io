@@ -1,7 +1,7 @@
 import Teacher from "@/models/Teacher_Schema";
 import { NextResponse } from "next/server";
 
-// Get todo using id
+// Get teacher using id
 export async function GET(request) {
   const username = request.url.split("/teacherall/")[1];
   // const username = request.params.name;
@@ -30,7 +30,7 @@ export async function GET(request) {
   }
 }
 
-// Update todo by id
+// Update teacher by id
 export async function PUT(request) {
   try {
     const id = request.url.split("/teacherall/")[1];
@@ -59,7 +59,7 @@ export async function PUT(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-// Delete todo using id
+// Delete teacher using id
 export async function DELETE(request) {
   const id = request.url.split("/teacherall/")[1];
   try {

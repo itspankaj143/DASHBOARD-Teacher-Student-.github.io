@@ -1,4 +1,4 @@
-.App{
+.App {
   text-align: center;
   background-color: lightgray;
   gap: 15px;
@@ -7,74 +7,162 @@
   justify-content: center;
   align-items: center;
   height: 350px;
-  width: 300px;
+  width: 300px !important;
   border-radius: 10px;
+  margin-right: 50px;
   box-shadow: -2px -4px 4px gray;
+  /* border: 1px solid red; */
 }
-  
-.h2{
+
+.h2 {
   text-align: center;
   width: 100%;
-  /* border: 1px solid red; */
   position: relative;
-    top:5rem;
-    font-weight: 600;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 2rem !important;
-  }
-  
-  .container{
-    
-    height: 90vh;
+  top: 5rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem !important;
+}
+
+.header {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 90%;
+  margin: 0 auto;
+  height: 4rem;
+  align-items: center;
+}
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* border: 1px solid green; */
+  background-color: gray;
+  /* box-shadow: 4px 4px 10px lightgray; */
+  padding: 5px;
+  border-radius: 5px;
+}
+.header > button {
+  background-color: red;
+  outline: none;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 5px;
+}
+.container {
+  width: 1500px;
+  padding: 10px;
+  height: 90vh;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 30px; */
+  /* border: 1px solid red; */
+  margin: 0 auto;
+}
+
+/* .button {
+  width: 68% !important;
+  border-radius: 5px;
+  text-align: center;
+  height: 2rem;
+  margin: 10px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid grey;
+  background: grey;
+}
+
+.button:hover {
+  background-color: rgb(32, 111, 148) !important;
+} */
+
+.all {
+  width: 70% !important;
+  border-radius: 5px;
+  text-align: center;
+  height: 2rem;
+  margin: 10px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid grey;
+}
+
+.dpicker {
+  border-radius: 5px !important;
+  width: 95% !important;
+  height: 2rem;
+  margin: 10px 0px;
+  text-align: center;
+  border: 1px solid grey;
+  outline: none;
+}
+
+.all:focus,
+.dpicker:focus {
+  outline: 2px solid rgb(32, 92, 148) !important;
+  border: 2px solid rgba(30, 110, 121) !important;
+}
+.btn {
+  border-radius: 5px;
+  text-align: center;
+  height: 2rem;
+  margin: 10px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid grey;
+  background: grey;
+}
+
+/* for mobile views */
+@media (max-width: 425px) {
+  .container {
+    width: 300px;
+    height: 70vh;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    /* border: 1px solid red; */
-    width: 1400px;
-    margin: 0 auto;
+    margin-top: 390px;
+    flex-direction: column-reverse;
   }
-  
-  .button{
-    width: 68% !important;
-    border-radius: 5px;
-    text-align: center;
-    height: 2rem;
-    margin: 10px;
-    cursor: pointer;
+  .header {
+    width: 375px;
+    font-size: 1.3rem;
+
+    /* border: 1px solid blue; */
+  }
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  .header > button {
+    background-color: red;
     outline: none;
-    border: 1px solid grey;
-    background: grey;
-  }
-  
-  .button:hover{
-    background-color: rgb(32, 111, 148) !important;
-  }
-  
-  
-  .all{
-    width: 68% !important;
+    padding: 4px 15px;
+    color: white;
     border-radius: 5px;
-    text-align: center;
-    height: 2rem;
-    margin: 10px;
-    cursor: pointer;
-    outline: none;
-    border: 1px solid grey;
   }
-  
-  .dpicker{
+  .mobile_calendar {
+    max-width: 340px;
+    height: 70vh !important;
+
+    /* border: 1px solid green; */
+
+    margin: 30px auto !important;
+  }
+  .dpicker {
     border-radius: 5px !important;
     width: 100% !important;
     height: 2rem;
+    padding: 10px;
     margin: 10px 0px;
     text-align: center;
     border: 1px solid grey;
     outline: none;
   }
-  
-  .all:focus, .dpicker:focus{
-    outline: 2px solid rgb(32, 92, 148)!important; 
-    border: 2px solid rgba(30, 110, 121) !important; 
+
+  .App {
+    width: 345px !important;
+    margin-left: 50px;
+    border: 1px solid green;
   }
+}

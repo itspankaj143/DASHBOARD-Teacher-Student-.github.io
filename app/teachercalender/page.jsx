@@ -9,17 +9,16 @@ import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const localizer = momentLocalizer(moment);
 
 function App() {
   const [newEvent, setNewEvent] = useState({
-    name:"",
+    name: "",
     title: "",
     dateTime: "",
     duration: "",
-    
   });
   const router = useRouter();
   const [allEvents, setAllEvents] = useState([]);
@@ -27,6 +26,7 @@ function App() {
   const [fetchDataFlag, setFetchDataFlag] = useState(false);
 
   useEffect(() => {
+    // Fetch data from the API when the component mounts or when fetchDataFlag changes
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/timeslot");
@@ -36,9 +36,9 @@ function App() {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData();
+    fetchData(); // Initial data fetch
     if (fetchDataFlag) {
-      fetchData();
+      fetchData(); // Fetch data again if fetchDataFlag changes
       setFetchDataFlag(false); // Reset flag after fetching data
     }
   }, [fetchDataFlag]);
@@ -51,18 +51,18 @@ function App() {
         "http://localhost:3000/api/timeslot",
         newEvent
       );
-      console.log(response.data)
+      console.log(response.data);
       // const addedEvent = {
       //   title: response.data.title,
       //   start: new Date(response.data.dateTime),
       //   end: new Date(response.data.dateTime),
       //   duration: response.data.duration,
       // };
-
+      // Update allEvents state with the newly added event
       setAllEvents([...allEvents, response.data]);
-      setFetchDataFlag(true);
+      setFetchDataFlag(true); // Set flag to fetch data again
       setNewEvent({
-        name:'',
+        name: "",
         title: "",
         dateTime: "",
         duration: "",
@@ -72,6 +72,7 @@ function App() {
     }
   }
 
+  // Transform events data for the Calendar component
   const transformedEvents = allEvents.map((event) => ({
     title: event.title,
     start: new Date(event.dateTime),
@@ -81,23 +82,20 @@ function App() {
 
   console.log(transformedEvents);
 
-
   function handleLogout() {
-    // localStorage.removeItem('token'); 
-    router.push('/login');
-
+    // Redirect to login page on logout button click
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    router.push("/login");
   }
+
   return (
     <>
-      <h1 className="text-center font-bold text-4xl border-2 bg-gray-400 rounded-md w-[90%] mx-auto shadow-md  p-1">
-        TEACHER DASHBOARD
-      </h1>
-      <button
-      onClick={handleLogout}
-      className="absolute top-1 right-28 px-4 py-2 rounded-md bg-red-500 text-white"
-    >
-      Logout
-    </button>
+      <div className={styles.header}>
+        <h1 className="">TEACHER DASHBOARD</h1>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+
       <div className={styles.container}>
         <div className={styles.App}>
           <input
@@ -106,14 +104,12 @@ function App() {
             placeholder="NAME"
             style={{ width: "20%", marginRight: "10px" }}
             value={newEvent.name}
-            onChange={(e) =>
-              setNewEvent({ ...newEvent, name: e.target.value })
-            }
+            onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
           />
           <input
             className={styles.all}
             type="text"
-            placeholder="Add Title"
+            placeholder="COURSE NAME"
             style={{ width: "20%", marginRight: "10px" }}
             value={newEvent.title}
             onChange={(e) =>
@@ -122,9 +118,8 @@ function App() {
           />
           <DatePicker
             className={styles.dpicker}
-            placeholderText="Select Date"
+            placeholderText="SELECT DATE"
             minDate={currentDate}
-            style={{ marginRight: "10px" }}
             selected={newEvent.dateTime}
             onChange={(dateTime) => setNewEvent({ ...newEvent, dateTime })}
           />
@@ -138,7 +133,7 @@ function App() {
                 duration: event.target.value,
               }))
             }
-            placeholder="Duration"
+            placeholder="DURATION"
           />
           <button
             style={{ marginTop: "10px" }}
@@ -148,15 +143,18 @@ function App() {
             Add Event
           </button>
         </div>
-        {transformedEvents && (
-          <Calendar
-            localizer={localizer}
-            events={transformedEvents}
-            startAccessor={transformedEvents.start}
-            endAccessor={transformedEvents.end}
-            style={{ height: 550, width: 950, margin: "50px" }}
-          />
-        )}
+        <div>
+          {transformedEvents && (
+            <Calendar
+              className={styles.mobile_calendar}
+              localizer={localizer}
+              events={transformedEvents}
+              startAccessor={transformedEvents.start}
+              endAccessor={transformedEvents.end}
+              style={{ height: 550, width: 950, margin: "50px" }}
+            />
+          )}
+        </div>
       </div>
     </>
   );

@@ -1,36 +1,44 @@
-.container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-  }
-  /* .blur-effect {
-    filter: blur(2px); 
-    opacity: 0.9; 
-  } */
-  
-  .h2{
-
-  margin-bottom: 20px;
+.container {
+  max-width: 90%;
+  margin: 0 auto;
   display: flex;
+  align-items: center;
   justify-content: center;
+  height: 90vh;
+  /* border: 1px solid red; */
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 90%;
+  margin: 0 auto;
+  height: 4rem;
+  align-items: center;
+}
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* border: 1px solid green; */
+  background-color: gray;
+  /* box-shadow: 4px 4px 10px lightgray; */
+  padding: 5px;
+  border-radius: 5px;
+}
+.header > button {
+  background-color: red;
+  outline: none;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 5px;
+}
 
-  color: red;
-  font-size: 2rem; 
-  }
-  
-  .container .calendar{
-    margin-top: 60px;
-    height: 80%;
-    width: 90%;
-  }
-  
-  .outer{
-    position: relative;
-    margin-top: 3px;
-  }
-  
-  /* .modal{
+.blur-effect {
+  filter: blur(0px);
+  opacity: 0.6;
+}
+
+/* .modal{
     position: absolute;
     height: 100%;
     width: 100%;
@@ -38,3 +46,27 @@
     z-index: 10000 !important;
     border: 1px solid red;
   } */
+
+/* for mobile views */
+@media (max-width: 425px) {
+  .header {
+    width: 375px;
+    font-size: 1.3rem;
+
+    /* border: 1px solid blue; */
+  }
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  .header > button {
+    background-color: red;
+    outline: none;
+    padding: 4px 15px;
+    color: white;
+    border-radius: 5px;
+  }
+  .calendar {
+    max-width: 100% !important;
+    height: 80vh !important;
+  }
+}

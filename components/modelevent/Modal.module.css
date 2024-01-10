@@ -4,18 +4,32 @@
   right: 0;
   top: 0;
   bottom: 0;
-
+  backdrop-filter: blur(5px); /* Apply blur effect to the backdrop */
   background-color: rgba(189, 189, 189, 0.9);
-  border: 1px solid red;
+  /* border: 1px solid red; */
+}
+.bookedButton {
+  /* Define styles for the booked button when disabled */
+  /* For example */
+  border: 2px solid blue;
+  background-color: slategray;
+  /* Add other styles as needed */
+}
+.bookNowButton {
+  /* Define styles for the book now button */
+  /* For example */
+  border: 2px solid blue;
+  background-color: slategray;
+  /* Add other styles as needed */
 }
 
 .modalcontent {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   position: fixed;
-  /* z-index:-1; */
+  z-index: 10;
   /* max-width: 50rem; */
   top: 50%;
-  left: 13%;
+  left: 50%;
   padding: 2rem 3rem;
   border-radius: 0.5rem;
   background-color: #fff;
@@ -45,4 +59,35 @@
   border-radius: 10px;
   background-color: black;
   color: white;
+}
+@media (max-width: 425px) {
+  .modal {
+    backdrop-filter: blur(
+      5px
+    ); /* Apply blur effect to the backdrop for mobile view */
+    background-color: rgba(189, 189, 189, 0.9);
+  }
+
+  .modalcontent {
+    border: 1px solid green;
+    padding: 1.5rem; /* Adjust padding for smaller screens */
+    max-width: 90%; /* Adjust the maximum width */
+    width: 90%; /* Adjust the width to fit smaller screens */
+  }
+  .h2 {
+    font-size: 1.6rem; /* Adjust font size for mobile */
+  }
+
+  .p {
+    font-size: 1.2rem; /* Adjust font size for mobile */
+    margin: 0.8rem 0 1.6rem 0; /* Adjust margins for mobile */
+    line-height: 1.6rem; /* Adjust line height for mobile */
+  }
+
+  .close {
+    top: 2px; /* Adjust top position for mobile */
+    right: 5px; /* Adjust right position for mobile */
+    font-size: 16px; /* Adjust font size for mobile */
+    padding: 2px 8px; /* Adjust padding for mobile */
+  }
 }

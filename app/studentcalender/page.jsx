@@ -2,32 +2,49 @@
 import React, { useEffect, useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
+import {
+  Calendar,
+  momentLocalizer,
+  Views,
+  Props,
+  globalizeLocalizer,
+} from "react-big-calendar";
+import globalize from "globalize";
+import "moment-timezone";
+
+moment.tz.setDefault("America/Los_Angeles");
+
+// const localizer = globalizeLocalizer(globalize);
 import styles from "./page.module.css";
 import axios from "axios";
 import Modal from "../../components/modelevent/Modal";
 const localizer = momentLocalizer(moment);
+import moment from "moment";
 import abc from "../../components/modelevent/Modal.module.css";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import CustomToolbar from "../../components/CustomToolbar/CustomToolbar";
 
 const SCal = () => {
-  const [allEvents, setAllEvents] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventsForCalendar, setEventsForCalendar] = useState([]);
+  const [allEvents, setAllEvents] = useState([]); // State to hold all events
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
+  const [selectedEvent, setSelectedEvent] = useState(null); // State to manage selected event
+  const [eventsForCalendar, setEventsForCalendar] = useState([]); // State to manage events for calendar
+  const [currentView, setCurrentView] = useState(Views.MONTH);
   const router = useRouter();
+  // console.log(eventsForCalendar);
   useEffect(() => {
+    // Fetch all events when component mounts
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/timeslot");
+        console.log(response.data);
         setAllEvents(response.data.timeSlot || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, []);
+  }, []); // Empty dependency array ensures the effect runs only once, similar to componentDidMount
 
   // const transformedEvents = allEvents.map((event) => ({
   //   name: event.name,
@@ -39,15 +56,18 @@ const SCal = () => {
   // }));
 
   useEffect(() => {
+    // Transform events for the calendar when 'allEvents' changes
     const transformedEvents = allEvents.map((event) => ({
       ...event,
       start: new Date(event.dateTime),
       end: new Date(event.dateTime),
     }));
+    console.log(transformedEvents);
     setEventsForCalendar(transformedEvents);
-  }, [allEvents]);
+  }, [allEvents]); // Re-run effect when 'allEvents' changes
 
   const handleClick = (event) => {
+    // Handle click on calendar events
     if (!event.booked) {
       setSelectedEvent(event);
       setModalIsOpen(true);
@@ -55,6 +75,7 @@ const SCal = () => {
   };
 
   const handleBooking = () => {
+    // Handle booking an event
     if (selectedEvent) {
       const updatedEvents = eventsForCalendar.map((event) =>
         event === selectedEvent ? { ...event, booked: true } : event
@@ -65,44 +86,61 @@ const SCal = () => {
     }
   };
   function handleLogout() {
-    // localStorage.removeItem('token'); 
-    router.push('/login');
-
+    // Logout function
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    router.push("/login");
   }
+
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+    console.log(view);
+  };
+
   return (
     <>
-      <div className={styles.outer}>
-        <h2 className="text-center font-bold text-4xl border-2 bg-gray-400 rounded-md w-[90%] mx-auto shadow-md p-1">
-          BOOK YOUR SESSION
-        </h2>
-        <button
-      onClick={handleLogout}
-      className="absolute top-1 right-28 px-4 py-2 rounded-md bg-red-500 text-white"
-    >
-      Logout
-    </button>
-        <div className={styles.container}>
-          {eventsForCalendar && (
-            <Calendar
-              className={styles.calendar}
-              localizer={localizer}
-              events={eventsForCalendar}
-              onSelectEvent={(event) => {
-                handleClick(event);
-              }}
-              eventPropGetter={(event) => ({
-                className: event.booked ? `${styles['booked-slot']} ${styles['blur-effect']}` : `${styles['free-slot']}`,
-                style: {
-                  pointerEvents: event.booked ? 'none' : 'auto',
-                },
-              })}
-              startAccessor="start"
-              endAccessor="end"
-              selectable
-              style={{ height: 550, width: 950, margin: "50px" }}
-            />
-          )}
-        </div>
+      <div className={styles.header}>
+        <h1 className="text-white">BOOK YOUR SESSION</h1>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+
+      {/* <div>
+        <input type="radio" name="" id="" />
+      </div> */}
+
+      <div className={styles.container}>
+        {eventsForCalendar && (
+          <Calendar
+            className={styles.calendar}
+            localizer={localizer}
+            events={eventsForCalendar}
+            onSelectEvent={(event) => {
+              handleClick(event);
+            }}
+            eventPropGetter={(event) => ({
+              className: event.booked
+                ? `${styles["booked-slot"]} ${styles["blur-effect"]}`
+                : `${styles["free-slot"]}`,
+              style: {
+                pointerEvents: event.booked ? "none" : "auto",
+              },
+              title: event.booked ? "Booked" : "", // Show 'Booked' or 'Free' on hover
+            })}
+            startAccessor={eventsForCalendar.start}
+            endAccessor={eventsForCalendar.end}
+            selectable
+            views={[Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA]}
+            toolbar={(props) => (
+              <CustomToolbar
+                {...props}
+                currentView={currentView}
+                onViewChange={handleViewChange}
+              />
+            )}
+            defaultView={currentView}
+            style={{ height: 550, width: 1400, margin: "50px" }}
+          />
+        )}
       </div>
 
       {modalIsOpen && (
@@ -110,16 +148,17 @@ const SCal = () => {
           setModalIsOpen={setModalIsOpen}
           selectedEvent={selectedEvent}
           handleBooking={handleBooking}
+          eventsForCalendar={eventsForCalendar}
         >
           <p className={abc.h2}>NAME:- {selectedEvent.name}</p>
           <p className={abc.p}>TITLE:- {selectedEvent.title}</p>
           <p className={abc.p}>Duration:- {selectedEvent.duration}</p>
-          <button
+          {/* <button
             className="border-2 border-blue-400 px-2 py-1 bg-slate-600 rounded-md text-white"
             onClick={() => handleBooking()}
           >
             BOOK NOW
-          </button>
+          </button> */}
         </Modal>
       )}
     </>

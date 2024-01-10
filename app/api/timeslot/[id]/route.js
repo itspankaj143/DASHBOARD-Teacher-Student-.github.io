@@ -1,7 +1,7 @@
 import TimeSlot from "@/models/TimeSlot";
 import { NextResponse } from "next/server";
 
-// Get todo using id
+// Get timeslot using id
 export async function GET(request) {
   const id = request.url.split("/timeslot/")[1];
   // console.log(id);
@@ -29,14 +29,17 @@ export async function GET(request) {
   }
 }
 
-// Update todo by id
+// Update timeslot by id
 export async function PUT(request) {
   try {
     const id = request.url.split("/timeslot/")[1];
-    const {name,title,dateTime, duration  } = await request.json();
+    const { name, title, dateTime, duration } = await request.json();
     const updatedTimeslot = await TimeSlot.update(
       {
-       name,title, dateTime, duration
+        name,
+        title,
+        dateTime,
+        duration,
       },
       { where: { id: id } }
     );
@@ -53,7 +56,7 @@ export async function PUT(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-// Delete todo using id
+// Delete timeslot using id
 export async function DELETE(request) {
   const id = request.url.split("/timeslot/")[1];
   try {
@@ -64,7 +67,10 @@ export async function DELETE(request) {
         { status: 200 }
       );
     } else {
-      return NextResponse.json({ message: "Timeslot not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Timeslot not found" },
+        { status: 404 }
+      );
     }
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
